@@ -1,0 +1,31 @@
+version: "2"
+services:
+    php:
+        build: ./php5.3
+        depends_on:
+            - db
+            - memcached
+        volumes:
+            - ./apache/httpd-vhosts.conf:/etc/httpd/conf.d/vhosts.conf
+            - ./php5.3/xdebug.ini:/etc/php.d/xdebug.ini
+            - ~/project/:/www
+        ports:
+            - "80:80"
+        extra_hosts:
+            - "api.yifengtech.com:127.0.0.1"
+            - "dev.yifengtech.com:127.0.0.1"
+            - "bj.yifengtech.com:127.0.0.1"
+            - "zz.yifengtech.com:127.0.0.1"
+            - "3kjapidev.sinaapp.com:127.0.0.1"
+            - "admin.3kongjian.com:127.0.0.1"
+            - "api.3kongjian.com:127.0.0.1"
+            - "m.yifengtech.com:127.0.0.1"
+        #command: '/usr/local/apache/bin/httpd -DFOREGROUND'
+    memcached:
+        image: memcached:1.4.33
+    db:
+        image: mysql:5.6
+        ports:
+            - "3306:3306"
+        volumes:
+            - ~/data/mysql:/var/lib/mysql
