@@ -6,7 +6,9 @@ RUN yum install -y httpd \
 	&& yum install -y php php-mbstring php-mysql php-pecl-memcache php-devel php-pear gcc gcc-c++ autoconf automake \
 	&& yum clean all \
 	#yum install php-pecl-xdebug #cents6.6 好像没有xdebug，使用下面的pecl命令安装
-	&& pecl install xdebug-2.2.7
+	&& pecl install xdebug-2.2.7 \
+	&& sed -i "s/;date.timezone =/date.timezone = \"Asia\/Shanghai\"/g" /etc/php.ini \
+	&& sed -i 's/short_open_tag = Off/short_open_tag = On/g' /etc/php.ini 
 
 EXPOSE 80
 
